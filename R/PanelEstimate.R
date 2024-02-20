@@ -56,7 +56,7 @@
 #' 
 #'
 #' @export
-PanelEstimate <- function(sets,
+PanelEstimateBD <- function(sets,
                           number.iterations = 1000,
                           df.adjustment = FALSE,
                           confidence.level = .95,
