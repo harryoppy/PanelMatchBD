@@ -37,7 +37,7 @@
 #' \item{lead}{The lead window sequence for which \code{PanelEstimate} is producing point estimates and standard errors.}
 #' \item{confidence.level}{the confidence level}
 #' \item{qoi}{the quantity of interest}
-#' \item{matched.sets}{the refined matched sets used to produce the estimations}
+#' \item{matched.sets}{the refined matched sets used to produce the estimations (removed for big data)}
 #' \item{standard.error}{the standard error(s) of the point estimates}
 #' 
 #' @references Imai, Kosuke, In Song Kim, and Erik Wang (2018)
@@ -363,7 +363,7 @@ panel_estimate <- function(inference = "bootstrap",
       z <- list("estimates" = o.coefs,
                 "bootstrapped.estimates" = coefs, "bootstrap.iterations" = number.iterations, "standard.error" = apply(coefs, 2, sd, na.rm = T),
                 "method" = method, "lag" = lag,
-                "lead" = lead, "confidence.level" = confidence.level, "qoi" = qoi, "matched.sets" = sets)
+                "lead" = lead, "confidence.level" = confidence.level, "qoi" = qoi)
       class(z) <- "PanelEstimate"
       return(z)
     }
@@ -415,7 +415,7 @@ panel_estimate <- function(inference = "bootstrap",
       sets2 <- decode_index(sets2, unit.index.map, og.unit.id)
       z <- list("estimates" = o.coefs,
                 "bootstrapped.estimates" = coefs, "bootstrap.iterations" = number.iterations, "standard.error" = apply(coefs, 2, sd, na.rm = T),
-                "lead" = lead, "confidence.level" = confidence.level, "qoi" = qoi, "matched.sets" = sets2)
+                "lead" = lead, "confidence.level" = confidence.level, "qoi" = qoi)
       class(z) <- "PanelEstimate"
       return(z)
       
@@ -488,7 +488,7 @@ panel_estimate <- function(inference = "bootstrap",
       sets2 <- decode_index(sets2, unit.index.map, og.unit.id)
       z <- list("estimates" = o.coefs_ate,
                 "bootstrapped.estimates" = coefs, "bootstrap.iterations" = number.iterations, "standard.error" = apply(coefs, 2, sd, na.rm = T),
-                "lead" = lead, "confidence.level" = confidence.level, "qoi" = qoi, "matched.sets" = list(sets, sets2))
+                "lead" = lead, "confidence.level" = confidence.level, "qoi" = qoi)
       class(z) <- "PanelEstimate"
       return(z)
     }
@@ -549,7 +549,6 @@ summary.PanelEstimate <- function(object, verbose = TRUE, bias.corrected = FALSE
         {
           cat("Weighted Difference-in-Differences with Covariate Balancing Propensity Score\n")
         }
-    cat("Matches created with", attr(object$matched.sets, "lag"), "lags\n")
     if(!is.null(object$bootstrap.iterations))
     {
       cat("\nStandard errors computed with", object$bootstrap.iterations, "Weighted bootstrap samples\n")  
