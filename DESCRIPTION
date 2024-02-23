@@ -1,4 +1,4 @@
-Package: PanelMatch
+Package: PanelMatchBD
 Type: Package
 Title: Matching Methods for Causal Inference with Time-Series Cross-Sectional Data
 Version: 1.0.1
